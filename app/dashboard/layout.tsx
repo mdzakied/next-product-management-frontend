@@ -1,40 +1,56 @@
 "use client";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { UserState } from "@/redux/userSlice";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
-import { DarkThemeToggle } from "flowbite-react";
-
-import { Avatar, Dropdown, Navbar } from "flowbite-react";
-
-import { Sidebar } from "flowbite-react";
-
-import { HiMenu, HiOutlineInbox, HiX } from "react-icons/hi";
+import { Avatar, Dropdown, Navbar, Sidebar } from "flowbite-react";
 
 import {
+  HiMail,
+  HiMenu,
+  HiOutlineUserCircle,
+  HiOutlineUsers,
+  HiX,
   HiArrowSmRight,
   HiChartPie,
   HiInbox,
-  HiShoppingBag,
-  HiTable,
   HiUser,
-  HiViewBoards,
 } from "react-icons/hi";
 
-import Image from "next/image";
-
-import { useState } from "react";
-
-import { ReactNode } from "react";
+import { logoutService } from "../../services/authService";
 
 export default function Dashboard({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Get user data from Redux
+  const user = useSelector((state: UserState) => state.user);
+
   // State
   const [isVisible, setIsVisible] = useState(false);
+
+  // Router
+  const router = useRouter();
 
   // Toggle visibility
   const toggleVisibility = () => {
     setIsVisible((prev) => !prev); // Toggle the visibility
+  };
+
+  // Handle logout
+  const handleLogout = async () => {
+    try {
+      // Call logout service
+      await logoutService();
+
+      // Redirect to dashboard
+      router.push("/");
+    } catch (err: any) {
+      console.log(err);
+    }
   };
 
   return (
@@ -57,27 +73,40 @@ export default function Dashboard({
           <Dropdown
             arrowIcon={false}
             inline
-            label={
-              <Avatar
-                alt="User settings"
-                img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                size={"sm"}
-                rounded
-              />
-            }
+            label={<Avatar rounded size={"sm"} alt="User settings" />}
           >
             {/* Dropdown Profile */}
             <Dropdown.Header>
-              <span className="block text-sm">Bonnie Green</span>
               <span className="block truncate text-sm font-medium">
-                name@flowbite.com
+                User Profile
               </span>
             </Dropdown.Header>
-            <Dropdown.Item>Dashboard</Dropdown.Item>
-            <Dropdown.Item>Settings</Dropdown.Item>
-            <Dropdown.Item>Earnings</Dropdown.Item>
+            <Dropdown.Item>
+              <div className="flex items-center">
+                <HiUser className="mr-2 text-lg" />
+                <span className="mt-1">{user.name}</span>
+              </div>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <div className="flex items-center">
+                <HiMail className="mr-2 text-lg" />
+                <span className="">{user.email}</span>
+              </div>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <div className="flex items-center">
+                <HiOutlineUsers className="mr-2 text-lg" />
+                <span className="">{user.gender}</span>
+              </div>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <div className="flex items-center">
+                <HiOutlineUserCircle className="mr-2 text-lg" />
+                <span className="">{user.role}</span>
+              </div>
+            </Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item>Sign out</Dropdown.Item>
+            <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
           </Dropdown>
 
           {/* Hamburger or Close Icon Button for Sidebar */}
@@ -113,17 +142,17 @@ export default function Dashboard({
                   >
                     Dashboard
                   </Sidebar.Item>
-                  <Sidebar.Item
-                    href="#"
-                    icon={HiUser}
-                    className="pointer-events-none opacity-50"
-                  >
+                  <Sidebar.Item href="/dashboard/user" icon={HiUser}>
                     Users
                   </Sidebar.Item>
-                  <Sidebar.Item href="/product" icon={HiInbox} label="102">
+                  <Sidebar.Item
+                    href="/dashboard/product"
+                    icon={HiInbox}
+                    label="102"
+                  >
                     Products
                   </Sidebar.Item>
-                  <Sidebar.Item href="/login" icon={HiArrowSmRight}>
+                  <Sidebar.Item onClick={handleLogout} icon={HiArrowSmRight}>
                     Logout
                   </Sidebar.Item>
                 </Sidebar.ItemGroup>

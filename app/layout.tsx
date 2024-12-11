@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ThemeModeScript } from "flowbite-react";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ReduxProvider } from "@/redux/provider";
 
 // Font
 const inter = Inter({ subsets: ["latin"] });
@@ -21,14 +22,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className=" scroll-smooth dark:bg-gray-800">
+    <html lang="en">
       {/* Head */}
       <head>
         {/* Theme */}
         <ThemeModeScript />
       </head>
       {/* Body */}
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ReduxProvider>{children}</ReduxProvider>
+      </body>
     </html>
   );
 }

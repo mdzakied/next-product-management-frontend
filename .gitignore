@@ -37,6 +37,7 @@ Thumbs.db
 *.old
 *.orig
 *.swp
+.next/
 
 # Debugger
 *.pid
