@@ -9,6 +9,8 @@ import { loginService } from "../../services/authService";
 
 import { Button, Card, Label, TextInput } from "flowbite-react";
 
+import { HiLockClosed, HiMail } from "react-icons/hi";
+
 export default function Login() {
   // State
   const [email, setEmail] = useState("");
@@ -45,14 +47,16 @@ export default function Login() {
       router.push("/dashboard/product");
     } catch (err: any) {
       setError(err.message);
+
+      setLoading(false); // Set loading state
     }
   };
 
   return (
     <section id="loginSection">
-      <div className="flex min-h-screen items-center justify-center p-3 dark:bg-gray-800">
+      <div className="flex min-h-screen items-center justify-center bg-gray-300 p-3 dark:bg-gray-700">
         <Card className="w-full max-w-md shadow-lg">
-          <h1 className="mb-4 text-center text-2xl font-bold text-white">
+          <h1 className="mb-4 text-center text-2xl font-bold text-black dark:text-white">
             Login
           </h1>
           {/* Error Message */}
@@ -66,7 +70,8 @@ export default function Login() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
+                icon={HiMail}
+                placeholder="name@example.com"
                 required
               />
             </div>
@@ -78,6 +83,7 @@ export default function Login() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                icon={HiLockClosed}
                 placeholder="Enter your password"
                 required
               />

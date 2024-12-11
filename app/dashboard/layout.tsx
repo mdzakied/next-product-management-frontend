@@ -128,7 +128,7 @@ export default function Dashboard({
         <main className="flex h-screen w-screen border-t border-gray-400">
           {/* Sidebar */}
           <div
-            className={`w-full border-r border-gray-400 md:w-auto ${
+            className={`w-full border-gray-400 md:w-auto md:border-r ${
               isVisible ? "block md:block" : "hidden md:block"
             }`}
           >
@@ -148,7 +148,7 @@ export default function Dashboard({
                   <Sidebar.Item
                     href="/dashboard/product"
                     icon={HiInbox}
-                    label="102"
+                    label="0"
                   >
                     Products
                   </Sidebar.Item>
