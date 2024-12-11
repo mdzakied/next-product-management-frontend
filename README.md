@@ -51,6 +51,13 @@ Here're some of the project's best features :
     * Edit Product -> Admin Auth
     * Delete Menu -> Admin Auth
 
+<br />
+<h2>🖥️ Layout</h2>
+
+Here're project's layout :
+
+[layout](https://www.figma.com/design/h85JTSHU8S6hnfU9K8PYdI/Prodigy?m=auto&t=xwYT3HYHkK45AZa0-6)
+
 <br>
 <h2>🛠️ Installation Steps :</h2>
 
